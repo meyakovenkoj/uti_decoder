@@ -4,6 +4,23 @@ import sys
 vector = "abcdefghkmnpqrstuvwxyz0123456789"
 
 
+# 0: UTTypeConformsTo
+# 1: public.filename-extension
+# 2: com.apple.ostype
+# 3: public.mime-type
+# 4: com.apple.nspboard-type
+# 5: public.url-scheme
+# 6: public.data
+# 7: public.text
+# 8: public.plain-text
+# 9: public.utf16-plain-text
+# A: com.apple.traditional-mac-plain-text
+# B: public.image
+# C: public.video
+# D: public.audio
+# E: public.directory
+# F: public.folder
+
 def parse_arguments(parser):
     parser.add_argument('-d', '--decode', help='decode UTI file type',
                         required=False, dest='uti_type', type=str, default='')
@@ -31,6 +48,9 @@ def base32encode(bitstr):
 
 
 def decode(string):
+    if string.find("dyn.a") != 0:
+        print("Unknown UTI format")
+        exit(1)
     clear_str = string[5:]
     bindata = ''
     res = ''
